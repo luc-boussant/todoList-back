@@ -1,10 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { TaskDto } from './interfaces/task.dto';
+import { EditTaskDto, CreateTaskDto } from './interfaces/task.dto';
 import { Task } from './task.entity';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
-  createTask = async (taskDto: TaskDto) => {
+  createTask = async (taskDto: CreateTaskDto) => {
     return await this.save(taskDto);
   };
 
@@ -12,7 +12,7 @@ export class TaskRepository extends Repository<Task> {
     return this.findOneOrFail(id);
   };
 
-  updateTask = async (id: string, taskDto: TaskDto) => {
+  updateTask = async (id: string, taskDto: EditTaskDto) => {
     return this.save({ ...taskDto, id: Number(id) });
   };
 
