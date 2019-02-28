@@ -2,10 +2,10 @@ import { Controller, Get, Param, Post, Body, Put, Delete, UseGuards } from '@nes
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthGuard } from '@nestjs/passport';
 
-import { TaskListDto } from './interfaces/taskList.dto';
+import { CreateTaskListDto, EditTaskListDto } from './interfaces/taskList.dto';
 import { TaskListRepository } from './taskList.repository';
 import { TaskListService } from './taskList.service';
-import { TaskDto } from '../task/interfaces/task.dto';
+import { CreateTaskDto } from '../task/interfaces/task.dto';
 import { TaskRepository } from '../task/task.repository';
 
 @Controller('taskLists')
@@ -17,7 +17,7 @@ export class TaskListController {
   ) {}
 
   @Post()
-  create(@Body() taskDto: TaskDto) {
+  create(@Body() taskDto: CreateTaskListDto) {
     return this.taskListService.createTaskList(taskDto);
   }
 
@@ -32,7 +32,7 @@ export class TaskListController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() taskListDto: TaskListDto) {
+  update(@Param('id') id: string, @Body() taskListDto: EditTaskListDto) {
     return this.taskListRepository.updateTaskList(id, taskListDto);
   }
 
@@ -42,7 +42,7 @@ export class TaskListController {
   }
 
   @Put(':id/task')
-  addTask(@Param('id') id: string, @Body() taskDto: TaskDto) {
+  addTask(@Param('id') id: string, @Body() taskDto: CreateTaskDto) {
     return this.taskListService.addTask(id, taskDto);
   }
 }
